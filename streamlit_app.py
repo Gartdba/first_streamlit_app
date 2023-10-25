@@ -38,7 +38,7 @@ streamlit.dataframe(fruits_to_show)
 streamlit.header("Fruityvice Fruit Advice")
 #fruit_choice = streamlit.text_input('What fruit would you like information about?', 'Kiwi')
 fruit_choice = streamlit.text_input('What fruit would you like information about?')
-streamlit.write('The user entered', fruit_choice)
+streamlit.write('The user entered', fruit_choice) #output what the user entered
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
 
 # write your own comment - put the data from fruityvice.com/api into new variable named below but formats it.
