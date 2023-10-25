@@ -30,3 +30,4 @@ streamlit.dataframe(fruits_to_show)
 #new sction to display fruityvice api response
 fruityvice_reponse = requests.get("https://fruityvice.com/api/fruit/watermelon")
 streamlit.text(fruityvice_reponse)
+streamlit.text(fruityvice_reponse.json())
