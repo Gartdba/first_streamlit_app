@@ -28,12 +28,12 @@ fruits_to_show = my_fruit_list.loc[fruits_selected] if fruits_selected else my_f
 streamlit.dataframe(fruits_to_show)
 
 #new sction to display fruityvice api response
-fruityvice_reponse = requests.get("https://fruityvice.com/api/fruit/watermelon")
+fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
 #streamlit.text(fruityvice_reponse)
 streamlit.header("Fruityvice Fruit Advice")
-streamlit.text(fruityvice_reponse.json()) # just writes the data to the screen
+streamlit.text(fruityvice_response.json()) # just writes the data to the screen
 
-# write your own comment -what does the next line do? 
+# write your own comment - put the data from fruityvice.com/api into new variable named below but formats it.
 fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
 # write your own comment - what does this do?
 streamlit.dataframe(fruityvice_normalized)
