@@ -44,7 +44,7 @@ try:
     fruit_choice = streamlit.text_input('What fruit would you like information about?')
     if not fruit_choice:
         streamlit.error("Please select a fruit to get information.")
-    else
+    else:
 #10/27        streamlit.write('The user entered', fruit_choice) #output what the user entered
 ###fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
 # write your own comment - put the data from fruityvice.com/api into new variable named below but formats it.
