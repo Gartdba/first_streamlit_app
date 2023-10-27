@@ -68,7 +68,7 @@ except URLError as e:
     streamlit.error()
 
 # we don't want to run anything past here while we toubleshoot - lab 12
-streamlit.stop()  #this stops any code below from running in the app
+############streamlit.stop()  #this stops any code below from running in the app
 
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
