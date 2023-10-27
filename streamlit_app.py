@@ -11,10 +11,16 @@ def get_fruityvice_data(this_fruit_choice):
         return fruityvice_normalized
 
 def get_fruit_load_list():
-        with my_cnx.cursor() as my_cur:
-                #####my_cur.execute("select * from fruit_load_list")
-                my_cur.execute("SELECT * from FRUIT_LOAD_LIST")                
-        return my_cur.fetchall()
+        try:
+                with get_snowflake_connection().cursor() as my_cur:
+                    my_cur.execute("SELECT * from FRUIT_LOAD_LIST")
+                    return my_cur.fetchall()
+        except snowflake.connector.errors.ProgrammingError as e:
+                return None
+        #        try:
+        ######with my_cnx.cursor() as my_cur:
+#        with                 my_cur.execute("SELECT * from FRUIT_LOAD_LIST")                
+ #       return my_cur.fetchall()
         
 
 
@@ -91,11 +97,17 @@ except URLError as e:
 
 streamlit.header("The Fruit Load List Contains:")
 # Add a button to load the fruit
+#if streamlit.button('Get Fruit Load List'):
+#        my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+#        my_data_row = get_fruit_load_list()
+#            ##########streamlit.dataframe(my_data_row)
+#        streamlit.text(my_data_row)
 if streamlit.button('Get Fruit Load List'):
-        my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-        my_data_row = get_fruit_load_list()
-            ##########streamlit.dataframe(my_data_row)
-        streamlit.text(my_data_row)
+    fruit_load_list = get_fruit_load_list()
+    if fruit_load_list is not None:
+        streamlit.dataframe(fruit_load_list)
+    else:
+        streamlit.error("Failed to retrieve data from Snowflake database.")
 
 streamlit.stop()  #this stops any code below from running in the app
 
