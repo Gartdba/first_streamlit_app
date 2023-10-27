@@ -12,7 +12,8 @@ def get_fruityvice_data(this_fruit_choice):
 
 def get_fruit_load_list():
         with my_cnx.cursor() as my_cur:
-                my_cur.execute("select * from fruit_load_list")
+                #####my_cur.execute("select * from fruit_load_list")
+                my_cur.execute("SELECT * from FRUIT_LOAD_LIST")                
         return my_cur.fetchall()
         
 
@@ -88,13 +89,13 @@ except URLError as e:
                 ##streamlit.text("The fruit load list contains:")
 #streamlit.text(my_data_row)
 
+streamlit.header("The Fruit Load List Contains:")
 # Add a button to load the fruit
 if streamlit.button('Get Fruit Load List'):
         my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-        my_data_rows = get_fruit_load_list()
-        streamlit.header("The Fruit Load List Contains:")
-        ##########streamlit.dataframe(my_data_rows)
-        streamlit.text(my_data_rows)
+        my_data_row = get_fruit_load_list()
+            ##########streamlit.dataframe(my_data_row)
+        streamlit.text(my_data_row)
 
 streamlit.stop()  #this stops any code below from running in the app
 
