@@ -55,7 +55,7 @@ if fruit_choice:  # Check if the input is not empty
     streamlit.dataframe(fruityvice_normalized)
 
 # we don't want to run anything past here while we toubleshoot - lab 12
-streamlit.stop()
+streamlit.stop()  #this stops any code below from running in the app
 
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
