@@ -81,6 +81,8 @@ streamlit.header("The Fruit Load List Contains:")
 ##streamlit.text("The fruit load list contains:")
 streamlit.text(my_data_row)
 
+streamlit.stop()  #this stops any code below from running in the app
+
 # lab 12
 add_my_fruit = streamlit.text_input('What fruit would you like to add?')
 streamlit.write('Thanks for entering ', add_my_fruit) #output what the user entered
