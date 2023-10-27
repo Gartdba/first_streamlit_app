@@ -4,6 +4,10 @@ import requests
 import snowflake.connector
 from urllib.error import URLError
 
+# Initialize Snowflake connection
+def get_snowflake_connection():
+    return snowflake.connector.connect(**streamlit.secrets["snowflake"])
+
 # create the repeatable code block function
 def get_fruityvice_data(this_fruit_choice):
         fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + this_fruit_choice)
