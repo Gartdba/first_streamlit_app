@@ -21,12 +21,13 @@ def get_fruit_load_list():
                     return my_cur.fetchall()
         except snowflake.connector.errors.ProgrammingError as e:
                 return None
-        #        try:
-        ######with my_cnx.cursor() as my_cur:
-#        with                 my_cur.execute("SELECT * from FRUIT_LOAD_LIST")                
- #       return my_cur.fetchall()
-        
-
+def insert_row_snowflake(new_fruit):
+    try:
+        with get_snowflake_connection().cursor() as my_cur:
+            my_cur.execute("INSERT INTO PC_RIVERY_DB.PUBLIC.FRUIT_LOAD_LIST VALUES (new_fruit)")
+        return "Thanks for adding " + new_fruit
+        except snowflake.connector.errors.ProgrammingError as e:
+                return None
 
 streamlit.title('My Parents New Healthy Diner')
 streamlit.header('Breakfast Menu')
@@ -113,9 +114,12 @@ if streamlit.button('Get Fruit Load List'):
     else:
         streamlit.error("Failed to retrieve data from Snowflake database.")
 
-streamlit.stop()  #this stops any code below from running in the app
-
 # lab 12
 add_my_fruit = streamlit.text_input('What fruit would you like to add?')
-streamlit.write('Thanks for entering ', add_my_fruit) #output what the user entered
-my_cur.execute("insert into PC_RIVERY_DB.PUBLIC.FRUIT_LOAD_LIST values ('from Streamlit')") 
+if streamlit.button('Add a Fruit to the List '):
+        #######streamlit.write('Thanks for entering ', add_my_fruit) #output what the user entered
+        #########my_cur.execute("insert into PC_RIVERY_DB.PUBLIC.FRUIT_LOAD_LIST values ('from Streamlit')") 
+    back_from_function = insert_row_snowflake(new_fruit)
+    streamlit.text(back_from_function)
+
+##streamlit.stop()  #this stops any code below from running in the app
