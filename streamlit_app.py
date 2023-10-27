@@ -8,19 +8,21 @@ from urllib.error import URLError
 def get_snowflake_connection():
     return snowflake.connector.connect(**streamlit.secrets["snowflake"])
 
-# create the repeatable code block function
+# function to get fruityvice data from API
 def get_fruityvice_data(this_fruit_choice):
         fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + this_fruit_choice)
         fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
         return fruityvice_normalized
 
+# function to get fruit load list from Snowflake database
 def get_fruit_load_list():
         try:
-                with get_snowflake_connection().cursor() as my_cur:
-                    my_cur.execute("SELECT * from FRUIT_LOAD_LIST")
-                    return my_cur.fetchall()
+           with get_snowflake_connection().cursor() as my_cur:
+                my_cur.execute("SELECT * from FRUIT_LOAD_LIST")
+           return my_cur.fetchall()
         except snowflake.connector.errors.ProgrammingError as e:
                 return None
+# 
 def insert_row_snowflake(new_fruit):
     try:
         with get_snowflake_connection().cursor() as my_cur:
