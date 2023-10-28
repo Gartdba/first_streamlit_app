@@ -117,9 +117,8 @@ if streamlit.button('Add a Fruit to the List '):
     if add_my_fruit:
             result = insert_row_snowflake(add_my_fruit)
             streamlit.text(result)
-        else:
-            streamlit.error("Please enter a fruit to add to the list.")
-   
+    else:
+        streamlit.error("Please enter a fruit to add to the list.")
         #######streamlit.write('Thanks for entering ', add_my_fruit) #output what the user entered
         #########my_cur.execute("insert into PC_RIVERY_DB.PUBLIC.FRUIT_LOAD_LIST values ('from Streamlit')") 
 #10/28    back_from_function = insert_row_snowflake(new_fruit)
