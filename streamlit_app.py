@@ -97,14 +97,15 @@ except URLError as e:
                 ##streamlit.text("The fruit load list contains:")
 #streamlit.text(my_data_row)
 
-streamlit.header("The Fruit Load List Contains:")
+###streamlit.header("The Fruit Load List Contains:")
+streamlit.header("View Our Fruit List - Add Your Favorites!")
 # Add a button to load the fruit
-#if streamlit.button('Get Fruit Load List'):
+#if streamlit.button('Get Fruit List'):
 #        my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 #        my_data_row = get_fruit_load_list()
 #            ##########streamlit.dataframe(my_data_row)
 #        streamlit.text(my_data_row)
-if streamlit.button('Get Fruit Load List'):
+if streamlit.button('Get Fruit List'):
     fruit_load_list = get_fruit_load_list()
     if fruit_load_list is not None:
         streamlit.dataframe(fruit_load_list)
