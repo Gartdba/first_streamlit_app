@@ -26,10 +26,10 @@ def get_fruit_load_list():
 def insert_row_snowflake(new_fruit):
     try:
         with get_snowflake_connection().cursor() as my_cur:
-            my_cur.execute("INSERT INTO PC_RIVERY_DB.PUBLIC.FRUIT_LOAD_LIST VALUES (new_fruit)")
-        return "Thanks for adding " + new_fruit
-        except snowflake.connector.errors.ProgrammingError as e:
-                return None
+            my_cur.execute(f"INSERT INTO PC_RIVERY_DB.PUBLIC.FRUIT_LOAD_LIST VALUES ('{new_fruit}')")
+        return f"Thanks for adding {new_fruit}"
+    except snowflake.connector.errors.ProgrammingError as e:
+        return None
 
 streamlit.title('My Parents New Healthy Diner')
 streamlit.header('Breakfast Menu')
@@ -46,16 +46,12 @@ my_fruit_list = my_fruit_list.set_index('Fruit')
         #streamlit.dataframe(my_fruit_list)
         # Let's put a pick list here so they can pick the fruit they want to include
         #streamlit.multiselect("Pick some fruits:", list(my_fruit_list.index))
-        
-        #streamlit.multiselect("Pick some fruits:", list(my_fruit_list.index),['Avocado','Strawberries'])
+                #streamlit.multiselect("Pick some fruits:", list(my_fruit_list.index),['Avocado','Strawberries'])
 fruits_selected = streamlit.multiselect("Pick some fruits:", list(my_fruit_list.index),['Avocado','Strawberries'])
-
 fruits_to_show = my_fruit_list.loc[fruits_selected] if fruits_selected else my_fruit_list
-
             #display the table on the page
             #streamlit.dataframe(my_fruit_list)
 streamlit.dataframe(fruits_to_show)
-
             #new sction to display fruityvice api response
             ##fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
             ##fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + "Kiwi")
@@ -77,7 +73,6 @@ try:
             ###fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
             # write your own comment - what does this do?
             ###streamlit.dataframe(fruityvice_normalized)
-
             # 10/27 if fruit_choice:  # Check if the input is not empty
             # 10/27        fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
             # 10/27        fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
@@ -119,9 +114,15 @@ if streamlit.button('Get Fruit Load List'):
 # lab 12
 add_my_fruit = streamlit.text_input('What fruit would you like to add?')
 if streamlit.button('Add a Fruit to the List '):
+    if add_my_fruit:
+            result = insert_row_snowflake(add_my_fruit)
+            streamlit.text(result)
+        else:
+            streamlit.error("Please enter a fruit to add to the list.")
+   
         #######streamlit.write('Thanks for entering ', add_my_fruit) #output what the user entered
         #########my_cur.execute("insert into PC_RIVERY_DB.PUBLIC.FRUIT_LOAD_LIST values ('from Streamlit')") 
-    back_from_function = insert_row_snowflake(new_fruit)
-    streamlit.text(back_from_function)
+#10/28    back_from_function = insert_row_snowflake(new_fruit)
+#10/28    streamlit.text(back_from_function)
 
 ##streamlit.stop()  #this stops any code below from running in the app
